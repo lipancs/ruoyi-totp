@@ -1,0 +1,45 @@
+<template>
+    <div class="app-container">
+        <el-button type="primary" @click="dialogVisible = true">重置或激活</el-button>
+        <el-button type="primary" @click="test">测试</el-button>
+        <el-input v-model="input" placeholder="请输入内容"></el-input>
+        <el-tag size="large" type="success">标签二</el-tag>
+        <el-dialog  title="提示" :visible.sync="dialogVisible" width="30%" height="80%"  :before-close="handleClose">
+            <el-button type="primary">验证</el-button>
+        </el-dialog>
+    </div>
+</template>
+<script>
+
+import request from '@/utils/request'
+import { parseStrEmpty } from "@/utils/ruoyi";
+
+  export default {
+    data() {
+      return {
+        input: '100',
+        dialogVisible: false
+      };
+    },
+methods: {
+
+    test(userId) {
+  const data = {
+    userId:101
+  }
+  return request({
+    url: '/system/user/resetUserTcode',
+    method: 'put',
+    data: data
+  })
+},
+      handleClose(done) {
+        this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {});
+      }
+    }
+  };
+</script>
